@@ -97,12 +97,22 @@ body {
  */
 
 .cover {
+    margin: 50px 0px 50px 0px;
+    overflow:auto;
     padding: 0 1.5rem;
 }
 
 .cover .btn-lg {
     padding: .75rem 1.25rem;
     font-weight: 700;
+}
+
+.cover p{
+    cursor: pointer;
+}
+
+.cover .badge {
+    cursor: pointer;
 }
 
 
