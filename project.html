@@ -331,7 +331,42 @@
                 });
                 $(this).tooltip('show');
             });
+            //用户不动自动拖动
+            window.setTimeout(AutoScroll, 100);
         });
+        //自动检测滚动条位置并拖动
+        var NextScrollY = 1;
+        var UserChangeScroll = false;
+        var LastChangeTime = 0;
+
+        function CheckScroll() {
+            //递增计步器
+            LastChangeTime += 1;
+            //超过2秒开始
+            if (LastChangeTime > 4) {
+                AutoScroll();
+            }
+            //继续
+            window.setTimeout(CheckScroll, 500);
+        }
+
+        function AutoScroll() {
+            //当前位置
+            var nowScrollY = $('.cover').scrollTop();
+            //如果偏差值超出范围，则判定用户修改，中断
+            if (NextScrollY - nowScrollY != 1) {
+                UserChangeScroll = true;
+            }
+            if (UserChangeScroll) {
+                return false;
+            }
+            //修改设定
+            $('.cover').scrollTop(NextScrollY);
+            //设定下一个变化位置
+            NextScrollY = $('.cover').scrollTop() + 1;
+            //继续
+            window.setTimeout(AutoScroll, 10);
+        }
     </script>
 </body>
 
