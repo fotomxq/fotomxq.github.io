@@ -16,7 +16,7 @@
 
 <body>
 
-    <div class="cover-container d-flex p-3 mx-auto flex-column">
+    <div class="cover-container d-flex p-3 mx-auto flex-column text-center">
         <header class="masthead mb-auto">
             <div class="inner">
                 <h3 class="masthead-brand">Fotomxq</h3>
@@ -28,11 +28,16 @@
             </div>
         </header>
 
-        <main role="main" class="inner cover">
+        <main role="main" class="inner cover text-left">
             <p>毕业于南开大学工商管理，计算机开发始于2006年，具备13年资深系统开发和运维、数据分析、网站建设、平面设计、3DMAX装潢设计经验。</p>
             <p>更多的成果请搜索“fotomxq”或“fortomxq”，以此署名的作品均有本人独立完成或参与制作。​</p>
             <hr>
             <h2 class="cover-heading">2018</h2>
+            <p data-img="">
+                临时加密通讯工具
+                <span class="badge badge-secondary">Golang</span> <span class="badge badge-secondary">Electron</span> <span class="badge badge-secondary">Vue</span> <span class="badge badge-secondary">Node.js</span> <span class="badge badge-secondary">HTML5</span>
+                <a href="https://github.com/fotomxq/temp-chat-tool" target="_blank"><span class="badge badge-primary"><i class="fab fa-github"></i> Github</span></a>
+            </p>
             <p data-img="">
                 ZBG量化交易程序
                 <span class="badge badge-secondary">Node.js</span>
@@ -280,7 +285,7 @@
             </p>
         </main>
 
-        <footer class="mastfoot mt-auto text-center">
+        <footer class="mastfoot mt-auto">
             <div class="inner">
                 <p>
                     <a href="http://www.linkedin.com/in/liuzilu/" target="_blank"><i class="fab fa-linkedin-in"></i> </a>
@@ -300,28 +305,28 @@
     <script src="./assets/js/bootstrap.min.js"></script>
 
     <script>
-        $(function(){
+        $(function() {
             //点击标签自动切换标记
-            $('.badge-secondary').click(function(){
-                $('.badge-info').each(function(){
+            $('.badge-secondary').click(function() {
+                $('.badge-info').each(function() {
                     $(this).removeClass('badge-info');
                     $(this).addClass('badge-secondary');
                 });
                 var thisHtml = $(this).html();
-                $('.badge-secondary').each(function(){
+                $('.badge-secondary').each(function() {
                     var eachHtml = $(this).html();
-                    if(thisHtml == eachHtml){
+                    if (thisHtml == eachHtml) {
                         $(this).removeClass('badge-secondary');
                         $(this).addClass('badge-info');
                     }
                 });
             });
             //显示图片
-            $('p[data-img]').hover(function(){
+            $('p[data-img]').hover(function() {
                 $('p[data-img]').tooltip('dispose');
                 var dataImg = $(this).attr('data-img');
                 var dataImgSrc = './assets/images/projects/' + dataImg;
-                if(!dataImg){
+                if (!dataImg) {
                     dataImgSrc = './assets/images/1920x1080.jpg';
                 }
                 var html = '<img style="max-width:300px;max-height:300px;" src="' + dataImgSrc + '">';
@@ -331,7 +336,42 @@
                 });
                 $(this).tooltip('show');
             });
+            //用户不动自动拖动
+            window.setTimeout(AutoScroll, 100);
         });
+        //自动检测滚动条位置并拖动
+        var NextScrollY = 1;
+        var UserChangeScroll = false;
+        var LastChangeTime = 0;
+
+        function CheckScroll() {
+            //递增计步器
+            LastChangeTime += 1;
+            //超过2秒开始
+            if (LastChangeTime > 4) {
+                AutoScroll();
+            }
+            //继续
+            window.setTimeout(CheckScroll, 500);
+        }
+
+        function AutoScroll() {
+            //当前位置
+            var nowScrollY = $('.cover').scrollTop();
+            //如果偏差值超出范围，则判定用户修改，中断
+            if (NextScrollY - nowScrollY != 1) {
+                UserChangeScroll = true;
+            }
+            if (UserChangeScroll) {
+                return false;
+            }
+            //修改设定
+            $('.cover').scrollTop(NextScrollY);
+            //设定下一个变化位置
+            NextScrollY = $('.cover').scrollTop() + 1;
+            //继续
+            window.setTimeout(AutoScroll, 10);
+        }
     </script>
 </body>
 
