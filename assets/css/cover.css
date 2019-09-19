@@ -47,6 +47,11 @@ body {
     max-width: 42em;
 }
 
+.des-text{
+    color: rgb(139, 139, 139);
+    font-size: 13px;
+}
+
 
 /*
  * Header
